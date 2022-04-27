@@ -1,0 +1,93 @@
+function repetidosColumna(){
+    for( let columnaIdx = 0; columnaIdx< sudoku.length; columnaIdx ++){  //aqui accedimos a la fila 
+        let columna = []
+        for(let column = 0; column < sudoku[columnaIdx].length; column++){      // aqui accederiamos a la columna 
+            // console.log(sudoku[column][fila])
+            columna.push(sudoku[column][columnaIdx])
+        }
+        //console.log(columna)
+
+        //let repetidosColumna = []  
+        const arrayOrdenado = [...columna].sort();           // ordena el array columna y lo mete en el arrayOrdenado
+        for (let i = 0; i < arrayOrdenado.length; i++) {      // recorre array ordenado 
+            if (arrayOrdenado[i] === arrayOrdenado[i + 1]) {    //es compara el primer elemento de array ordenado con el siguiente 
+                console.log('Hay un repetido en la columna')
+                return false
+            }
+        }
+        //console.log(repetidosColumna)
+        console.log('Numeros repetidos en columna '+ (columnaIdx + 1)  + ': ' + repetidosColumna);
+    }
+    return true
+}
+function repetidosFila(){
+    for(let fila = 0; fila < sudoku.length; fila++){ //Recorre las filas de la matrix sudoku
+        //let repetidos=[]
+        const arrayOrdenado = [...sudoku[fila]].sort();
+        for (let i = 0; i < arrayOrdenado.length; i++) {
+            if (arrayOrdenado[i] === arrayOrdenado[i + 1]) {
+                console.log('Hay un repetido en la fila')
+                return false
+            }
+        }
+        console.log('Numeros repetidos en fila '+ (fila + 1)  + ': ' +repetidos);
+    }
+    return true
+}
+
+/* esta funcion recorre los cuadros 3x3 de las 3 primeras filas y columnas para saber si hay repetidos */
+function repetidosCuadro(){
+
+//el codigo puede no arrojar algunos pares de numeros 
+
+    //var numeroFila3 = 0
+    let repFila = 0
+    while(repFila < 3){
+        repColum = 0
+        while(repColum < 3){
+            let cuadros = []
+            for( var fila = 0 +  (3 * repFila); fila < 3  + (3 * repFila) ; fila++ ){
+                for( var colum = 0 +  (3 * repColum); colum< 3 +  (3 * repColum); colum++){
+                    cuadros.push(sudoku[fila][colum])
+                }
+                //numeroFila3++
+            }
+            console.log(cuadros)
+            const arrayOrdenado = [...cuadros.sort()]
+            for (let i = 0; i < arrayOrdenado.length; i++) {
+                if(arrayOrdenado[i] === arrayOrdenado[i + 1]) {
+                    console.log('Hay un repetido en el cuadro')
+                    return false;
+                }
+            }
+            repColum ++
+        }
+        repFila ++
+    }
+    return true
+}
+
+function veriFSudoku(sudoku){
+    let validadorFila = repetidosFila()
+    let validadorColumna = repetidosColumna()
+    let validadorCuadros = repetidosCuadro()
+    if (validadorCuadros && validadorFila && validadorColumna){
+        console.log('Los cuadros estan bien')
+    }
+    else{
+        console.log('Hay algo que está mal')
+    }
+}
+
+var sudoku = [
+    [1,2,3,2,2,2,3,3,3],
+    [4,5,6,2,2,2,3,3,3],
+    [7,8,9,2,2,2,3,3,3],
+    [4,4,4,5,5,5,6,6,6],
+    [4,4,4,5,5,5,6,6,6],
+    [4,4,4,5,5,5,6,6,6],
+    [7,7,7,8,8,8,9,9,9],
+    [7,7,7,8,8,8,9,9,9],
+    [7,7,7,8,8,8,9,9,9]
+]
+veriFSudoku(sudoku)
